@@ -1,0 +1,195 @@
+class Node:
+    
+    def __init__(self,data=None):
+        self.data=data
+        self.right=None
+        self.left=None
+    
+    def insert(self,root,data):
+        if root is None:
+            root=Node(data)
+        elif data<root.data:
+            root.left=self.insert(root.left,data)
+        else:
+            root.right=self.insert(root.right,data)
+        return root
+        
+    def exist(self,root,data):
+        if root is None:
+            return False
+        elif data<root.data:
+            return self.exist(root.left,data)
+        elif data>root.data:
+            return self.exist(root.right,data)
+        else:
+            return True
+    
+    def delete(self,root,data):
+        
+        if root is None:
+            return root
+        elif data<root.data:
+            root.left=self.delete(root.left,data)
+        elif data>root.data:
+            root.right=self.delete(root.right,data)
+            
+        else:
+            
+            if root.right is None:
+              
+                temp=root.left
+                root=None
+                return temp 
+                
+            elif root.left is None:
+              
+                temp=root.right
+                root=None
+                return temp
+            
+            else:
+                temp=root.right
+                while(temp.left):
+                    temp=temp.left
+                root.data=temp.data
+                root.right= self.delete(root.right,temp.data)
+        return root
+    def inorderTraversal(self,root):
+        res=[]
+        if root:
+            
+            res=self.inorderTraversal(root.left)
+            res.append(root.data)
+            res+=self.inorderTraversal(root.right)
+        return res
+    # def preorderTraversal()
+    
+    def sumofallNodes(self,root):
+        if root is None:
+            return 0
+        return root.data+self.sumofallNodes(root.left)+self.sumofallNodes(root.right)
+    
+    def height(self,root):
+        if root is None:
+            return 0
+        return max(self.height(root.left),self.height(root.right))+1
+    
+    def printall(self):
+       
+        if self.left:
+            self.left.printall()
+        print(self.data)
+        if self.right:
+            self.right.printall()
+    
+    def isbalanced(self,root):
+        if root is None:
+            return True
+        leftside=self.height(root.left)
+        rightside=self.height(root.right)
+        
+        return (
+            abs(leftside-rightside)<=1
+            and self.isbalanced(root.left)
+            and self.isbalanced(root.right)
+            )
+    def balancedtree(self,lnodes,start,end):
+        
+        if start>end:
+            return None
+        mid=(start+end)//2
+        
+        node=Node(lnodes[mid])
+        
+        node.left=self.balancedtree(lnodes,start,mid-1)
+        node.right=self.balancedtree(lnodes,mid+1,end)
+        return node
+    
+    def createbalancedtree(self,root):
+        
+        res=self.inorderTraversal(root)
+       
+        if len(res)!=0:
+            last=len(res)
+            node=self.balancedtree(res,0,last-1)
+        
+        return node
+    
+    def preorderTraversal(self,root):
+        res=[]
+        if root:
+            res.append(root.data)
+            res+=self.preorderTraversal(root.left)
+            res+=self.preorderTraversal(root.right)
+        return res
+    def invertTree(self,root):
+        if root:
+            root.left,root.right=self.invertTree(root.right),self.invertTree(root.left)
+        return root
+    
+    def leafNode(self,root):
+        res=[]
+        if root:
+            if root.left is None and root.right is None:
+                res.append(root.data)
+            res+=self.leafNode(root.left)
+            res+=self.leafNode(root.right)
+        return res
+    
+    def heightofallnodes(self,root,level,dict1):
+        
+        if root is None:
+            return level
+         
+        if root.data  not in dict1:
+            dict1[root.data]=level
+        level+=1  
+        self.heightofallnodes(root.left,level,dict1)
+        self.heightofallnodes(root.right,level,dict1)
+        return dict1
+    
+root = Node(12)
+root.insert(root,6)
+root.insert(root,14)
+root.insert(root,3)
+root.insert(root,16)
+root.insert(root,10)
+root.insert(root,13)
+print ("inorder traversal",root.inorderTraversal(root))
+dict1={}
+print("depth of all the roots:",root.heightofallnodes(root,0,dict1))  
+print("leaf nodes",root.leafNode(root))
+print("sum of all nodes",root.sumofallNodes(root))
+print("check the value",root.exist(root,14))
+print("check the tree is balanced",root.isbalanced(root))
+print("height of the node",root.height(root))
+
+root.invertTree(root)
+print("inorder Traversal after inverting the tree",root.inorderTraversal(root))
+
+
+root.delete(root,16)
+print ("inorder traversal",root.inorderTraversal(root))
+
+
+
+
+
+
+
+
+root1 = Node(10)
+root1.left = Node(8)
+root1.left.left = Node(7)
+root1.left.left.left = Node(6)
+root1.left.left.left.left = Node(5)
+
+
+print ("inorder traversal",root1.inorderTraversal(root1))
+node=root.createbalancedtree(root1)
+print ("preorder traversal",node.preorderTraversal(node))
+
+
+
+    
+   

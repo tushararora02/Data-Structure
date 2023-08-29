@@ -1,0 +1,33 @@
+class Queue:
+    def __init__(self):
+        self.queue=[]
+    def addtoQueue(self,dataval):
+        if dataval not in self.queue:
+            self.queue.insert(0,dataval)
+            return True
+        else:
+            return False
+    def remove(self):
+        if len(self.queue)<=0:
+            return "queue is empty"
+        else:
+            return self.queue.pop()
+    def size(self):
+        return len(self.queue)
+    def printall(self):
+        if len(self.queue)<=0:
+            print("queue is empty")
+        else:
+            for i in self.queue:
+                print(i)
+
+queue1=Queue()
+queue1.addtoQueue("Mon")
+queue1.addtoQueue("Tue")
+queue1.addtoQueue("Wed")
+queue1.addtoQueue("Thu")
+queue1.printall()
+
+queue1.remove()
+print("after the remove")
+queue1.printall()

@@ -1,0 +1,46 @@
+class Dequeue:
+    def __init__(self):
+        self.dequeue=[]
+    def addfromleft(self,dataval):
+        if dataval not in self.dequeue:
+            self.dequeue.insert(0,dataval)
+            return True
+        else:
+            return False
+    def addfromright(self,dataval):
+        if dataval not in self.dequeue:
+            self.dequeue.append(dataval)
+            return True
+        else:
+            return False
+            
+    def removefromright(self):
+        if len(self.dequeue)<=0:
+            return "Dequeue is empty"
+        else:
+            return self.dequeue.pop()
+    
+    def removefromleft(self):
+        if len(self.dequeue)<=0:
+            return "Dequeue is empty"
+        else:
+            return self.dequeue.pop(0)
+    
+dequeue1=Dequeue()
+dequeue1.dequeue=["mon","tue","wed"]
+
+dequeue1.addfromright("thu")
+print ("Appended at right - ")
+print (dequeue1.dequeue)
+
+dequeue1.addfromleft("Sun")
+print ("Appended at left is - ")
+print (dequeue1.dequeue)
+
+dequeue1.removefromright()
+print ("Deleting from right - ")
+print (dequeue1.dequeue)
+
+dequeue1.removefromleft()
+print ("Deleting from left - ")
+print (dequeue1.dequeue)

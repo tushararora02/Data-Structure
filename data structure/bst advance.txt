@@ -1,0 +1,129 @@
+class Node:
+    
+    def __init__(self,data):
+        self.data=data
+        self.right=None
+        self.left=None
+        self.parent=None
+    def pathToNode(self,root,path,data):
+        
+        if root is None:
+            return False
+            
+        path.append(root.data)
+        
+        if root.data==data:
+            return True
+            
+        if (root.left !=None and self.pathToNode(root.left,path,data) or 
+           root.right!=None and self.pathToNode(root.right,path,data)):
+               return True
+               
+        path.pop()
+        return False
+        
+    def distance(self,root,data1,data2):
+        if root:
+            path1=[]
+            self.pathToNode(root,path1,data1)
+            
+            path2=[]
+            self.pathToNode(root,path2,data2)
+            
+            i=0
+            while(i<len(path1) and i<len(path2)):
+                if path1[i]!=path2[i]:
+                    break
+                i=i+1
+                
+            return (len(path2)+len(path1)-2*i)
+        else:
+            return 0
+            
+    def LCA(self,root,data1,data2):
+        if root  is None :
+            return None
+        if root.data==data1 or root.data==data2:
+            return root
+          
+        root.left=self.LCA(root.left,data1,data2)
+        root.right=self.LCA(root.right,data1,data2)
+        
+        if root.left is not None and root.right is not None:
+            return root
+        if root.left:
+            
+            return root.left
+        else:
+            return root.right
+           
+           
+    def inOrderSuccessor(self,root,n):
+        
+        if n.right  is not None:
+        
+            return self.minvalue(n.right)
+        p=n.parent
+        
+        while(p is not None):
+            if n!=p.right:
+                break
+            n=p
+            p=p.parent
+        return p
+    def insert(self,root,data):
+        if root is None:
+            root=Node(data)
+        elif data<root.data:
+            root.left=self.insert(root.left,data)
+            root.left.parent=root
+        else:
+            root.right=self.insert(root.right,data)
+            root.right.parent=root
+        return root
+
+         
+         
+           
+    def minvalue(self,node):
+        temp=node
+        while(temp is not None):
+            if temp.left is  None:
+                break
+            temp=temp.left
+        return temp
+                
+           
+root = Node(20)
+root = root.insert(root, 8);
+root = root.insert(root, 22);
+root = root.insert(root, 4);
+root = root.insert(root, 12);
+root = root.insert(root, 10); 
+root = root.insert(root, 14);   
+root = root.insert(root, 24);   
+temp = root.left.right.right
+ 
+succ = root.inOrderSuccessor( root, temp)
+if succ is not None:
+    print ("Inorder Successor of "+str(temp.data)+ " is ", succ.data)
+else:
+    print ("Inorder Successor doesn't exist")       
+           
+
+dist = root.distance(root, 14, 8)
+print ("Distance between node {} & {}: {}", dist)
+ 
+dist = root.distance(root, 14, 22)
+print ("Distance between node {} & {}: {}",dist)
+ 
+dist = root.distance(root, 20, 22)
+print ("Distance between node {} & {}: {}",dist)
+ 
+dist = root.distance(root, 24, 14)
+print ("Distance between node {} & {}: {}",dist)
+ 
+dist = root.distance(root, 4, 14)
+print ("Distance between node {} & {}: {}", dist)
+
+print("lowest common Ancester" , root.LCA(root,4,12).data)

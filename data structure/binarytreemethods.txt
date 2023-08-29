@@ -1,0 +1,177 @@
+class Node:
+    def __init__(self,data):
+        self.right=None
+        self.left=None
+        self.data=data
+    
+    def insert(self,root,data):
+        if root is None:
+            root=Node(data)
+        elif  data<root.data:
+            root.left=self.insert(root.left,data)
+        else:
+            root.right=self.insert(root.right,data)
+        return root
+    
+    def delete(self,root,value):
+        if root is None:
+            return root
+        elif value<root.data:
+            root.left=self.delete(root.left,value)
+        elif value>root.data:
+            root.right=self.delete(root.right,value)
+        else:
+            if root.left is None:
+                temp=root.right
+                root=None
+                return temp
+            elif root.right is None:
+                temp=root.left
+                root=None
+                return temp
+            else:
+                temp=root.right
+                while temp.left:
+                    temp=temp.left
+                root.data=temp.data
+                root.right=self.delete(root.right,temp.data)
+        return root
+        
+    def inorderTraversal(self,root):
+        res=[]
+        if root:
+            res=self.inorderTraversal(root.left)
+            res.append(root.data)
+            res+=self.inorderTraversal(root.right)
+        return res
+    def sumofallNodes(self,root):
+        if root is None:
+            return 0
+        return root.data+self.sumofallNodes(root.left)+self.sumofallNodes(root.right)
+    def exists(self,root,data):
+        if root is None:
+            return False
+        elif data<root.data:
+            return self.exists(root.left,data)
+        
+        elif data>root.data:
+            return self.exists(root.right,data)
+        else:
+            return True
+    
+    def search(self,root,data):
+        if root is None:
+            return str(data)+ " is not Found"
+        elif data<root.data:
+            return self.search(root.left,data)
+        elif data>root.data:
+            return self.search(root.right,data)
+        else:
+            return str(data) +" is found"
+    
+    def maximumDepth(self,root,level):
+        if root is None:
+            return level
+        level+=1
+        return max(self.maximumDepth(root.left,level),self.maximumDepth(root.right,level))
+        
+    def minimumDepth(self,root,level):
+        if root is None:
+            return level
+        level+=1
+        return min(self.minimumDepth(root.left,level),self.minimumDepth(root.right,level))
+        
+    def invertedtree(self,root):
+        if root:
+            root.left,root.right=self.invertedtree(root.right),self.invertedtree(root.left)
+        return root
+    def maxvalue(self,root):
+        temp=root.right
+        while temp.right:
+            temp=temp.right
+        return temp.data
+    def minvalue(self,root):
+        temp=root.left
+        while temp.left:
+            temp=temp.left
+        return temp.data
+    def depthofalltheNodes(self,root,level,dict1):
+        if root is None:
+            return level
+        level+=1
+        if root.data not in dict1:
+            dict1[root.data]=level
+        self.depthofalltheNodes(root.left,level,dict1)
+        self.depthofalltheNodes(root.right,level,dict1)
+        return dict1
+    
+    def topViewoftree(self,root):
+        finalList=[]
+        resforrightside=[]
+        resforleftside=[]
+        if root:
+            temp=root.left
+            if temp:
+                resforleftside=self.topViewoftree(temp.left)
+                resforleftside.append(temp.data)
+            
+            temp1=root.right
+            if temp1:
+                resforrightside=self.topViewoftree(temp1.right)
+                resforrightside.append(temp1.data)
+            resforrightside.reverse()
+            finalList=resforleftside+[root.data]+resforrightside
+        return finalList
+    
+    
+    def leafnodes(self,root):
+        res=[]
+        if root:
+            if root.left is None and root.right is None:
+                res.append(root.data)
+            res+=self.leafnodes(root.left)
+            res+=self.leafnodes(root.right)
+        return res
+        
+root=Node(23)
+list1=[3,45,67,12,56,17]
+for i in list1:
+    root.insert(root,i)
+print("inorder Traversal",root.inorderTraversal(root))
+
+print("sum of all the Nodes",root.sumofallNodes(root))
+dict1={}
+print("depth of all the roots:",root.depthofalltheNodes(root,0,dict1))  
+print("check the node is present in tree",root.exists(root,45))
+print("max depth of binary tree:",root.maximumDepth(root,0))
+print("min depth of binary tree:",root.minimumDepth(root,0)) 
+print("maximum value in the binary tree",root.maxvalue(root))
+print("minimum value in the binary tree",root.minvalue(root))
+print("leaf nodes",root.leafnodes(root))
+root.delete(root,23)
+print(root.search(root,22))
+print("inorder Traversal",root.inorderTraversal(root))
+root.invertedtree(root)
+print("inorder Traversal after inverting the tree",root.inorderTraversal(root))
+
+
+
+root1 = Node(1)
+root1.left = Node(2)
+root1.right = Node(3)
+root1.left.right = Node(4)
+root1.left.left = Node(5)
+root1.right.right = Node(6)
+
+print("top view of tree",root1.topViewoftree(root1))
+
+
+
+
+
+
+
+
+
+
+  

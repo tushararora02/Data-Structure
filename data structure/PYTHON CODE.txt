@@ -1,0 +1,43 @@
+list1=['man', 'car', 'bumble', 'bee', 'project']
+list5=["aa","bb","aa","cc","dd","hh","hh"]
+
+def countcharacter(list1):
+    list2=[]
+    str1=""
+    for i in list1:
+        str1=str1+i;
+    for i in range(len(str1)-1):
+        count1=0
+        for j in range(len(str1)):
+            if(str1[i]==str1[j]):
+                count1=count1+1
+        countstr=str(count1)
+        str3=str1[i]+":"+countstr
+        
+        list2.append(str3)
+    set1=set(list2)
+    list2=list(set1)
+    return list2
+
+list4=countcharacter(list1)
+
+
+print(list4)
+
+
+def countthefrequencyofword(list5):
+    list6=[]
+    for i in range(len(list5)):
+        count=0
+        for j in range(len(list5)):
+            if(list5[i]==list5[j]):
+               count=count+1
+        str3=list5[i]+":"+str(count)
+        list6.append(str3)
+    set1=set(list6)
+    list6=list(set1)
+    return list6
+    
+list9=countthefrequencyofword(list5)
+print(list9)
+        

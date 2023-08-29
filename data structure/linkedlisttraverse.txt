@@ -1,0 +1,25 @@
+class Nodes:
+    def __init__ (self,datavalue=None):
+        self.datavalue=datavalue
+        self.nextvalue=None
+    
+class LinkedList:
+    def __init__ (self):
+        self.headval=None
+    
+    def printAll(self):
+        printval=self.headval
+        while printval is not None:
+            print(printval.datavalue)
+            printval=printval.nextvalue
+
+
+list=LinkedList()
+list.headval=Nodes("Mon")
+node2=Nodes("Tue")
+node3=Nodes("wed")
+
+list.headval.nextvalue=node2
+node2.nextvalue=node3
+
+list.printAll()

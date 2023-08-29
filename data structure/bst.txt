@@ -1,0 +1,185 @@
+class Node:
+    def __init__(self,data):
+         self.right=None
+         self.left=None
+         self.data=data
+    def insert(self,root,data):
+        if  root is None:
+            root=Node(data)
+        elif data<root.data:
+            root.left=self.insert(root.left,data)
+        else:
+            root.right=self.insert(root.right,data)
+        return root
+    
+    def delete(self,root,value):
+        
+        if root is None:
+            return root
+        elif value<root.data:
+            root.left=self.delete(root.left,value)
+        elif value>root.data:
+            root.right=self.delete(root.right,value)
+        else:
+            
+            if root.left is None:
+                temp=root.right
+                root=None
+                return temp
+            elif root.right is None:
+                temp=root.left
+                root=None
+                return temp
+                
+            else:
+                temp=root.right
+                while temp.left:
+                    temp=temp.left
+                root.data=temp.data
+                root.right=self.delete(root.right,temp.data)
+        return root
+        
+    def inorderTraversal(self,root):
+        res=[]
+        if root:
+            res=self.inorderTraversal(root.left)
+            res.append(root.data)
+            res+=self.inorderTraversal(root.right)
+        return res
+        
+    def preorderTraversal(self,root):
+        res=[]
+        if root:
+            res.append(root.data)
+            res+=self.preorderTraversal(root.left)
+            res+=self.preorderTraversal(root.right)
+        return res
+        
+    def postorderTraversal(self,root):
+        res=[]
+        if root:
+            res=self.postorderTraversal(root.left)
+            res+=self.postorderTraversal(root.right)
+            res.append(root.data)
+        return res
+        
+    def exist(self,root,data):
+        if root is None:
+            return False
+        elif data<root.data:
+            return self.exist(root.left,data)
+        elif data>root.data:
+            return self.exist(root.right,data)
+        else:
+            return True
+            
+    def maxValue(self,root):
+        if root:
+            temp=root.right
+            while temp.right:
+                 temp=temp.right
+            return temp.data
+        return None
+    def minValue(self,root):
+        if root:
+            temp=root.left
+            while temp.left:
+                temp=temp.left
+            return temp.data
+        return None
+    def sumofallNodes(self,root):
+        if root is None:
+            return 0
+        return root.data+self.sumofallNodes(root.left)+self.sumofallNodes(root.right)
+        
+    def maximumDepth(self,root):
+        if root is None:
+            return 0
+        
+        return max(self.maximumDepth(root.left),self.maximumDepth(root.right))+1
+    def minimumDepth(self,root):
+        if root is None:
+            return 0
+        return min(self.minimumDepth(root.left),self.minimumDepth(root.right))+1
+    def height(self,root):
+        if root is None:
+            return 0
+        
+        lheight=self.height(root.left)
+        rheight=self.height(root.right)
+        
+        return max(lheight,rheight)+1
+        
+    def checkBalancedTree(self,root):
+        
+        if root is None:
+            return True
+        lheight=self.height(root.left)
+        rheight=self.height(root.right)
+        
+        return (
+        abs(lheight-rheight)<=1 and
+        self.checkBalancedTree(root.left) and
+        self.checkBalancedTree(root.right))
+        
+    def invertTree(self,root):
+        if root:
+            root.left,root.right=self.invertTree(root.right),self.invertTree(root.left)
+        return root
+    def depthofalltheNodes(self,root,level,dict):
+        
+        if root is None:
+            return level
+        level+=1
+        if root.data not in dict1:
+            dict1[root.data]=level
+        self.depthofalltheNodes(root.left,level,dict1)
+        self.depthofalltheNodes(root.right,level,dict1)
+        return dict1
+        
+        
+    def leafNodes(self,root):
+        res=[]
+        if root:
+            if root.left is None and root.right is None:
+                res.append(root.data)
+            res+=self.leafNodes(root.left)
+            res+=self.leafNodes(root.right)
+        return res
+
+root=Node(15)
+list1=[10,25,6,14,20,60]
+for i in list1:
+    root.insert(root,i)
+print("inorder Traversal",root.inorderTraversal(root))
+
+print("sum of all the Nodes",root.sumofallNodes(root))
+dict1={}
+print("depth of all the roots:",root.depthofalltheNodes(root,0,dict1))  
+print("check the node is present in tree",root.exist(root,15))
+print("max depth of binary tree:",root.maximumDepth(root))
+print("min depth of binary tree:",root.minimumDepth(root)) 
+print("maximum value in the binary tree",root.maxValue(root))
+print("minimum value in the binary tree",root.minValue(root))
+print("leaf nodes",root.leafNodes(root))
+print("preorder Traversal",root.preorderTraversal(root))
+print("post order Traversal",root.postorderTraversal(root))
+
+print("check the tree is balanced",root.checkBalancedTree(root))
+root.delete(root,15)
+
+print("inorder Traversal",root.inorderTraversal(root))
+        
+
+root.invertTree(root)
+print("inorder Traversal after inverting the tree",root.inorderTraversal(root))
+
+            
+            
+            
+            
+            
+            
+            
+            
+            

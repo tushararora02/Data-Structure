@@ -1,0 +1,100 @@
+class height:
+    def __init__(self):
+        self.height=0
+        
+
+class Nodes:
+    def __init__(self,data):
+        self.left=None
+        self.right=None 
+        self.data=data
+    
+    def insert(self,data):
+        if self.data:
+            if data<self.data:
+                if self.left is None:
+                    self.left=Nodes(data)
+                else:
+                    self.left.insert(data)
+            elif(data>self.data):
+                if self.right is None:
+                    self.right=Nodes(data)
+                else:
+                    self.right.insert(data)
+        else:
+            self.data=Nodes(data)
+            
+    def delete(self,root,data):
+        
+        if root is None:
+            return root
+        if root.data==data:
+            if root.left is None:
+                root=root.right
+            elif root.right is None:
+                root=root.left
+            else:
+                temp=root.right
+                minvalue=temp.data
+                while temp.left:
+                    temp=temp.left
+                    minvalue=temp.data
+                root.right=self.delete(root.right,root.data)
+        elif data<root.data:
+            root.left=self.delete(root.left,data)
+        else:
+            root.right=self.delete(root.right,data)
+        return root
+            
+            
+        
+    def inorderTraversal(self,root):
+        
+        res=[]
+        if root:
+            res=self.inorderTraversal(root.left)
+            res.append(root.data)
+            res+=self.inorderTraversal(root.right)
+        return res
+    
+    def preorderTraversal(self,root):
+        res=[]
+        if root:
+            res.append(root.data)
+            res+=self.inorderTraversal(root.left)
+            res+=self.inorderTraversal(root.right)
+ 
+        return res
+    
+    def postorderTraversal(self,root):
+        res=[]
+        if root:
+            res=self.postorderTraversal(root.left)
+            res+=self.postorderTraversal(root.right)
+            res.append(root.data)
+        return res
+        
+    def isBalanced(self,root):
+        lh=height()
+        rh=height()
+        if root is None:
+            return True
+        return (
+        (abs(lh.height-rh.height)<=1)
+        and self.isBalanced(root.left)
+        and self.isBalanced(root.right))
+        
+        
+root = Nodes(27)
+root.insert(14)
+root.insert(35)
+root.insert(10)
+root.insert(19)
+root.insert(31)
+root.insert(42)
+print("inorder traversal",root.inorderTraversal(root))
+print("preorder traversal",root.preorderTraversal(root))
+print("posteorder traversal",root.postorderTraversal(root))
+root = root.delete(root, 27)
+print("check if the tree is balanced",root.isBalanced(root))
+print("inorder traversal",root.inorderTraversal(root))

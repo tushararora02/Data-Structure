@@ -1,0 +1,67 @@
+List
+interface
+duplicate values
+ordered collections
+
+
+ArrayList
+dynamic array for storing the elements. 
+insertion order
+duplicate values
+not synchronized
+
+
+
+LinkedList
+Collection interface
+doubly linked list internally 
+duplicate elements
+insertion order
+not synchronized
+
+Vector
+synchronized
+many methods that are not the part of Collection framework
+
+Stack
+The stack is the subclass of Vector
+the last-in-first-out data structure
+
+
+Queue
+Queue interface maintains the first-in-first-out order. 
+defined as an ordered list
+
+
+PriorityQueue
+Queue interface
+It holds the elements or objects which are to be processed by their priorities
+
+Deque Interface
+In Deque, we can remove and add the elements from both the side. 
+
+ArrayDeque
+ArrayDeque class implements the Deque interface. It facilitates us to use the Deque. Unlike queue, we can add or delete the elements from both the ends
+
+
+Set Interface
+It represents the unordered set of elements which doesn't allow us to store the duplicate items. 
+
+
+
+HashSet
+the collection that uses a hash table for storage. Hashing is used to store the elements in the HashSet
+
+LinkedHashset
+LinkedList implementation of Set Interface
+It also contains unique elements. 
+It maintains the insertion order and permits null elements
+
+
+SortedSet Interface
+SortedSet is the alternate of Set interface that provides a total ordering on its elements.
+The elements of the SortedSet are arranged in the increasing (ascending) order.
+
+TreeSet
+that uses a tree for storage
+The elements in TreeSet stored in ascending order.
